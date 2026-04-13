@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi niña ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Serif', 'Times New Roman', serif;
+        }
+
+        canvas {
+            max-width: 100%;
+            max-height: 70vh;
+        }
+
+        h1 {
+            color: #FF7F50;
+            margin-top: 20px;
+            font-size: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="heartCanvas"></canvas>
+    <h1>Feliz día mi niña</h1>
+
+    <script>
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Ajustar tamaño del canvas
+        canvas.width = 600;
+        canvas.height = 600;
+
+        let frame = 0;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const scale = 120; // Tamaño del corazón
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#FF3385';
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#FF3385';
+
+            // Parámetro M para el latido (igual que en tu Python)
+            let M = 45 + 35 * Math.sin(frame / 10);
+
+            for (let x_val = -Math.sqrt(3); x_val <= Math.sqrt(3); x_val += 0.01) {
+                // Fórmula de tu corazón
+                let y_val = Math.pow(Math.abs(x_val), 2/3) + 0.9 * Math.sin(M * x_val) * Math.sqrt(3 - x_val * x_val);
+                
+                // Convertir coordenadas matemáticas a píxeles del canvas
+                let posX = centerX + x_val * scale;
+                let posY = centerY - y_val * scale; // Invertido porque en canvas Y crece hacia abajo
+
+                if (x_val === -Math.sqrt(3)) {
+                    ctx.moveTo(posX, posY);
+                } else {
+                    ctx.lineTo(posX, posY);
+                }
+            }
+
+            ctx.stroke();
+            frame++;
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
