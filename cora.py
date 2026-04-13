@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-
+st.set_page_config(page_title="Para mi niña ❤️", layout="centered")
 # Estilo personalizado para centrar y dar color al fondo
 st.markdown("""
     <style>
@@ -11,9 +11,6 @@ st.markdown("""
     }
     </style>
     """, unsafe_allow_html=True)
-
-st.title("❤️ Un mensaje especial")
-
 # Creamos la figura de Matplotlib
 fig, ax = plt.subplots(figsize=(7, 8), facecolor='black')
 ax.set_facecolor('black')
