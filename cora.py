@@ -3,9 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-# Configuración de la página
-st.set_page_config(page_title="Para mi niña ❤️", layout="centered")
-
 # Estilo personalizado para centrar y dar color al fondo
 st.markdown("""
     <style>
