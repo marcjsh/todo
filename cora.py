@@ -1,44 +1,35 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+import time
 
+st.set_page_config(page_title="Para mi niña", layout="centered")
 
+# Configuramos el gráfico
 fig, ax = plt.subplots(figsize=(7, 8), facecolor='black')
 ax.set_facecolor('black')
-
 ax.set_xlim(-2, 2)
 ax.set_ylim(-2, 2.5)
 ax.set_aspect('equal')
+ax.axis('off') # Quitamos los ejes para que se vea más limpio
 
-ax.grid(True, which='both', color='gray', linestyle='--', linewidth=0.5, alpha=0.3)
-ax.set_xticks(np.arange(-2, 2.1, 0.2))
-ax.set_yticks(np.arange(-2, 2.6, 0.2))
+x = np.linspace(-np.sqrt(3), np.sqrt(3), 400) # Menos puntos para que sea rápido
+line, = ax.plot([], [], color='#FF3385', lw=3)
+text_crush = ax.text(0, -1.8, "Feliz día mi niña", fontsize=18, 
+                     color='#FF7F50', ha='center', va='center', fontfamily='serif')
 
-ax.set_xticklabels([])
-ax.set_yticklabels([])
+# Creamos un contenedor vacío en Streamlit para ir actualizando el gráfico
+placeholder = st.empty()
 
-ax.axhline(0, color='white', linewidth=1)
-ax.axvline(0, color='white', linewidth=1)
-
-x = np.linspace(-np.sqrt(3), np.sqrt(3), 2000) 
-line, = ax.plot([], [], color='#FF3385', lw=2)
-
-text_crush = ax.text(0, -1.8, "Feliz dia mi niña", fontsize=18, color='#FF7F50', ha='center', va='center', fontfamily='serif')
-
-def init():
-    line.set_data([], [])
-    return line,
-
-def update(frame):
-    M = 45 + 35 * np.sin(frame / 10) 
-    
+# Bucle de animación
+for frame in range(200):
+    M = 45 + 35 * np.sin(frame / 10)
     y = np.power(np.abs(x), 2/3) + 0.9 * np.sin(M * x) * np.sqrt(3 - x**2)
     
     line.set_data(x, y)
-    return line,
-
-ani = FuncAnimation(fig, update, frames=np.linspace(0, 2*np.pi*10, 200),
-                    init_func=init, blit=True, interval=30)
-
-st.pyplot(fig)
+    
+    # Actualizamos el gráfico en el contenedor
+    placeholder.pyplot(fig)
+    
+    # Un pequeño delay para que no vaya demasiado rápido
+    time.sleep(0.05)
