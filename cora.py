@@ -1,3 +1,4 @@
+import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -40,4 +41,4 @@ def update(frame):
 ani = FuncAnimation(fig, update, frames=np.linspace(0, 2*np.pi*10, 200),
                     init_func=init, blit=True, interval=30)
 
-plt.show()
+st.pyplot(fig)
